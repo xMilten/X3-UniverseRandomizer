@@ -1,0 +1,171 @@
+﻿<UserControl x:Class="X3UR.UserControls.DebugModeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:X3UR.UserControls"
+             xmlns:viewModels="clr-namespace:X3UR.ViewModels"
+             xmlns:debugModeViewModels="clr-namespace:X3UR.ViewModels.DebugModeViewModels"
+             xmlns:debugModeModels="clr-namespace:X3UR.ViewModels.DebugModeModels"
+             mc:Ignorable="d" 
+             Width="Auto" Height="Auto">
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Width" Value="90" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style>
+
+        <DataTemplate x:Key="FirstListBoxTemplate">
+            <Grid Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Index, StringFormat='[{0}] '}" />
+                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{Binding Color}" />
+                <TextBlock Grid.Column="2" Text="{Binding Count, StringFormat=' ({0})'}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SecondListBoxTemplate">
+            <Grid Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Index, StringFormat='[{0}] '}" />
+                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{Binding Color}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60*" />
+        </Grid.RowDefinitions>
+        <Expander IsExpanded="True" Name="expanderRaceInfos" HorizontalContentAlignment="Center">
+            <Grid DataContext="{Binding Path=(debugModeViewModels:DebugModeRaceInfosViewModel.DebugModeRaceInfos)}" d:DataContext="{d:DesignInstance debugModeModels:DebugModeRaceInfos}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="55*" />
+                    <RowDefinition Height="45*" />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Raw 0 -->
+                    <Label Content="Rasse" />
+                    <Label Grid.Column="1" Content="Größe" />
+                    <Label Grid.Column="2" Content="Clusters" />
+                    <Label Grid.Column="3" Content="Uni. Größe" />
+
+                    <!-- Raw 1 -->
+                    <Label Grid.Row="1" Content="{Binding RaceName}" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding RaceSize}" />
+                    <Label Grid.Row="1" Grid.Column="2" Content="{Binding RaceClusters}" />
+                    <Label Grid.Row="1" Grid.Column="3" Content="{Binding UniverseSize}" />
+
+                    <!-- Raw 2 -->
+                    <Label Grid.Row="2" Content="Sektor ID" />
+                    <Label Grid.Row="2" Grid.Column="1" Content="Sektor Koords" />
+                    <Label Grid.Row="2" Grid.Column="2" Content="Enb. Sektoren" />
+                    <Label Grid.Row="2" Grid.Column="3" Content="Sektoren k.m.e." />
+
+                    <!-- Raw 3 -->
+                    <Label Grid.Row="3" Content="{Binding SectorId}" />
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding SectorCoords}" />
+                    <Label Grid.Row="3" Grid.Column="2" Content="{Binding SectorsClaimable}" />
+                    <Label Grid.Row="3" Grid.Column="3" Content="{Binding SectorsCanClaimMe}" />
+
+                    <!-- Raw 4 -->
+                    <Label Grid.Row="4" Content="Cluster ID" />
+                    <Label Grid.Row="4" Grid.Column="1" Content="Cluster Koords" />
+                    <Label Grid.Row="4" Grid.Column="2" Content="Cluster Größe" />
+                    <Label Grid.Row="4" Grid.Column="3" Content="Nbr. Cluster" />
+                    <Label Grid.Row="4" Grid.Column="4" Content="Wsn. Sektoren" />
+
+                    <!-- Raw 5 -->
+                    <Label Grid.Row="5" Content="{Binding ClusterId}" />
+                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding ClusterCoords}" />
+                    <Label Grid.Row="5" Grid.Column="2" Content="{Binding ClusterSize}" />
+                    <Label Grid.Row="5" Grid.Column="3" Content="{Binding ClusterNeighbor}" />
+                    <Label Grid.Row="5" Grid.Column="4" Content="{Binding ClusterGrowableSectors}" />
+                </Grid>
+                <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 -->
+                    <Label Grid.Column="2" Content="N" />
+
+                    <!-- Row 1 -->
+                    <Label Grid.Row="1" Grid.Column="2" Content="{Binding NeighborNorth}" Background="{Binding NeighborNorthBackground}" />
+
+                    <!-- Row 2 -->
+                    <Label Grid.Row="2" Grid.Column="0" Content="W" Width="20" />
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding NeighborWest}" Background="{Binding NeighborWestBackground}" />
+                    <Label Grid.Row="2" Grid.Column="2" Content="{Binding SectorCoords}" />
+                    <Label Grid.Row="2" Grid.Column="3" Content="{Binding NeighborEast}" Background="{Binding NeighborEastBackground}" />
+                    <Label Grid.Row="2" Grid.Column="4" Content="O" Width="20" />
+
+                    <!-- Raw 3 -->
+                    <Label Grid.Row="3" Grid.Column="2" Content="{Binding NeighborSouth}" Background="{Binding NeighborSouthBackground}" />
+
+                    <!-- Raw 4 -->
+                    <Label Grid.Row="4" Grid.Column="2" Content="S" />
+                </Grid>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="1" IsExpanded="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                    <ColumnDefinition Width="33*" />
+                </Grid.ColumnDefinitions>
+                <ListBox ItemTemplate="{StaticResource FirstListBoxTemplate}" ItemsSource="{Binding Path=(debugModeViewModels:DebugModeRaceListsViewModel.FirstList)}" />
+                <ListBox Grid.Column="1" ItemTemplate="{StaticResource SecondListBoxTemplate}" ItemsSource="{Binding Path=(debugModeViewModels:DebugModeRaceListsViewModel.SecondList)}" />
+                <ListBox Grid.Column="2" ItemTemplate="{StaticResource SecondListBoxTemplate}" ItemsSource="{Binding Path=(debugModeViewModels:DebugModeRaceListsViewModel.ThirdList)}" />
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="2" IsExpanded="True">
+            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <TreeView ItemsSource="{Binding Path=(viewModels:DebugModeViewModel.Items)}" />
+            </ScrollViewer>
+        </Expander>
+    </Grid>
+</UserControl>

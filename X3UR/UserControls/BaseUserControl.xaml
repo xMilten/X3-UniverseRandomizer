@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="X3UR.UserControls.BaseUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:X3UR.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="570" d:DesignHeight="1030">
+    <UserControl.Resources>
+        <Style x:Key="Label" TargetType="Label">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Gray" />
+        </Style>
+
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Width" Value="28" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38" />
+            <RowDefinition />
+            <RowDefinition Height="38" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="34" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Seed" Style="{StaticResource Label}" />
+            <TextBox Grid.Column="1" Height="28" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="6 0 0 0" Text="{Binding Path=(viewModels:BaseViewModel.Seed)}" KeyDown="TextBox_KeyDown" />
+            <Button Grid.Column="2" Style="{StaticResource Button}" Click="RadomizeSeed_Click">
+                <Image Source="pack://application:,,,/Resources/Icons/rnd.png" Margin="2" />
+            </Button>
+        </Grid>
+
+        <TabControl Grid.Row="1" >
+            <TabItem Width="70" Name="tabItemUniverse" Header="Universum">
+                <ScrollViewer Name="scrollViewUniverse" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+            </TabItem>
+            <TabItem Width="70" Header="Sektor" />
+            <TabItem Width="70" Header="Spieler" />
+            <TabItem Width="70" Header="Debug" IsSelected="True">
+                <ScrollViewer Name="scrollViewDebug" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+            </TabItem>
+        </TabControl>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="31" />
+                <ColumnDefinition Width="31" />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Code zum Kartentausch" Style="{StaticResource Label}" Visibility="{Binding Path=(viewModels:BaseViewModel.Visibility)}" />
+            <Button Grid.Column="1" Style="{StaticResource Button}" Click="ChangeVisibility_Click"></Button>
+            <Button Grid.Column="2" Style="{StaticResource Button}"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

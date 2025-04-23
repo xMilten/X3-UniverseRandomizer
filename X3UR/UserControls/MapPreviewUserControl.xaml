@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="X3UR.UserControls.MapPreviewUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:X3UR.ViewModels"
+             xmlns:objective="clr-namespace:X3UR.Objectives"
+             mc:Ignorable="d"
+             Width="Auto" Height="Auto" Background="Black">
+    <UserControl.Resources>
+        <viewModel:RaceColorConverter x:Key="RaceColorConverter" />
+        <viewModel:RaceNameConverter x:Key="RaceNameConverter" />
+
+        <DataTemplate x:Key="SectorTemplate">
+            <Grid Visibility="{Binding Visibility}"
+                  ToolTip="{Binding Converter={StaticResource RaceNameConverter}}"
+                  Width="{Binding Path=(viewModel:MapPreviewViewModel.Margin)}"
+                  Height="{Binding Path=(viewModel:MapPreviewViewModel.Margin)}"
+                  MouseDown="Sector_MouseDown">
+                <Image Width="{Binding Path=(viewModel:MapPreviewViewModel.ImageSize)}" Source="/Resources/MapPreviewImages/sector_128.png" />
+                <Rectangle Width="{Binding Path=(viewModel:MapPreviewViewModel.ImageSize)}" Height="{Binding Path=(viewModel:MapPreviewViewModel.ImageSize)}">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Resources/MapPreviewImages/sector_128.png" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding Converter={StaticResource RaceColorConverter}}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Label Content="{Binding Coords}" Margin="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RowTemplate">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource SectorTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding Path=(viewModel:MapPreviewViewModel.Map)}" ItemTemplate="{StaticResource RowTemplate}" />
+    </ScrollViewer>
+</UserControl>
